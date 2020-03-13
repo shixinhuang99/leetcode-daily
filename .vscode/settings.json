@@ -1,12 +1,3 @@
 {
     "files.defaultLanguage": "cpp",
-    "[cpp]": {
-        "files.encoding": "gbk"
-    },
-    "[c]": {
-        "files.encoding": "gbk"
-    },
-    "[markdown]": {
-        "files.encoding": "utf8"
-    }
 }
