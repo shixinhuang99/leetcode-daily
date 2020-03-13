@@ -21,7 +21,7 @@
         },
         "presentation": {
             "echo": true,
-            "reveal": "always", // always，silent，never
+            "reveal": "always",
             "focus": false,
             "panel": "shared"
         },

@@ -1,5 +1,5 @@
 {
-    "C_Cpp.errorSquiggles": "Disabled",
+    "files.defaultLanguage": "cpp",
     "[cpp]": {
         "files.encoding": "gbk"
     },
