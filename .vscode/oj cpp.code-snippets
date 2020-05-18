@@ -1,7 +1,7 @@
 {
 	"Print to console": {
 		"scope": "cpp",
-		"prefix": "base",
+		"prefix": "cpp",
 		"body": [
 			"#include<bits/stdc++.h>",
 			"",
@@ -12,6 +12,6 @@
 			"    cin.tie(0);",
 			"$1}"
 		],
-		"description": "headfile & main()"
+		"description": "headerfile & main()"
 	}
 }

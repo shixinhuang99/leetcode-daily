@@ -12,7 +12,6 @@
             "-g",
             "-Wall",
             "-static-libgcc",
-            "-fexec-charset=GBK",
         ],
         "type": "process",
         "group": {
