@@ -1,7 +1,7 @@
 /*
  * @Author       : ApassEr
  * @Date         : 2020-05-20 17:16:01
- * @LastEditTime : 2020-05-20 17:16:25
+ * @LastEditTime : 2020-05-20 17:29:31
  * @Description  : P1049 装箱问题
  * @Algorithm    : 0-1背包dp
  */
@@ -21,9 +21,7 @@ int main() {
     }
     for (int i = 0; i < n; ++i) {
         for (int j = V; j >= v[i]; --j) {
-            if (f[j -v[i]] + v[i] > f[j]) {
-                f[j] = f[j - v[i]] + v[i];
-            }
+            f[j] = max(f[j], f[j - v[i]] + v[i]);
         }
     }
     cout << V - f[V];
