@@ -1,3 +1,5 @@
 *.txt
 *.exe
 /*.cpp
+in
+out
