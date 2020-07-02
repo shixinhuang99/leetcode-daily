@@ -1,7 +1,7 @@
 /*
  * @Author       : ApassEr
  * @Date         : 2020-07-02 14:06:28
- * @LastEditTime : 2020-07-02 14:23:53
+ * @LastEditTime : 2020-07-02 14:56:01
  * @Description  : 34. 在排序数组中查找元素的第一个和最后一个位置
  * @Algorithm    : 二分查找/STL
  */
@@ -63,5 +63,31 @@ public:
         }
         ans[1] -= 1;
         return ans;
+    }
+};
+
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if (nums.empty()) return {-1, -1};
+        int l = 0;
+        int r = nums.size() - 1;
+        int mid;
+        while (l <= r) {
+            mid = (l + r) >> 1;
+            // mid = l + ((r - l) >> 1);
+            if (nums[mid] < target) {
+                l = mid + 1;
+            } else if (nums[mid] > target) {
+                r = mid - 1;
+            } else {
+                break;
+            }
+        }
+        if (l > r) return {-1, -1};
+        int i = mid, j = mid;
+        while (i - 1 >= 0 && nums[i] == nums[i - 1]) --i;
+        while (j + 1 < (int)nums.size() && nums[j] == nums[j + 1]) ++j;
+        return {i, j};
     }
 };
