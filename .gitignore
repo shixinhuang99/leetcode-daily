@@ -1,5 +1,6 @@
 *.txt
 *.exe
 /*.cpp
+/*.js
 in
 out
