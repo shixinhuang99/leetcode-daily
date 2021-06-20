@@ -1,6 +1,1 @@
-*.txt
-*.exe
-/*.cpp
-/*.js
-in
-out
+/playground.js
