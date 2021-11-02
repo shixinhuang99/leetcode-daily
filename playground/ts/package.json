@@ -1,0 +1,12 @@
+{
+  "name": "ts-playground",
+  "scripts": {
+    "test": "ts-node test.ts"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.2",
+    "@types/node": "^16.11.6",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.4.4"
+  }
+}
