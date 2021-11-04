@@ -1,7 +1,8 @@
 {
   "name": "ts-playground",
+  "license": "MIT",
   "scripts": {
-    "test": "ts-node test.ts"
+    "test": "./run.sh"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.2",
