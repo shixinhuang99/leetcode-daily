@@ -3,5 +3,6 @@
   "prettier.singleQuote": true,
   "javascript.suggest.autoImports": false,
   "typescript.suggest.autoImports": false,
-  "typescript.preferences.includePackageJsonAutoImports": "off"
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "prettier.printWidth": 100
 }
