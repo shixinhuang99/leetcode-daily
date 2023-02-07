@@ -1,4 +1,6 @@
+.DS_Store
 node_modules
-sol.*
-test.json
-test.txt
+input.json
+output.txt
+target
+Cargo.lock
