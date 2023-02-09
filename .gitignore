@@ -1,6 +1,9 @@
 .DS_Store
+
 node_modules
-input.json
-output.txt
+
 target
 Cargo.lock
+
+input.json
+output.txt

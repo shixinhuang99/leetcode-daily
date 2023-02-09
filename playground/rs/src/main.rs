@@ -1,6 +1,7 @@
+mod utils;
 mod sol;
 
-use sol::run;
+use utils::run;
 
 fn main() {
     run();
