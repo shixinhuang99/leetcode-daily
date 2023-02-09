@@ -2,7 +2,7 @@ use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
 pub struct Input {
-    pub answer: Vec<i32>,
+    pub answer: (),
     pub case: Case,
 }
 
