@@ -1,2 +1,12 @@
-[workspace]
-members = ["./playground/rs"]
+[package]
+name = "leetcode-daily"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.67"
+publish = false
+
+[dependencies]
+serde = { version = "1.0.152", features = ["derive"] }
+serde_json = "1.0.92"
+tabled = { version = "0.10.0", features = ["color"] }
+owo-colors = "3.5.0"
