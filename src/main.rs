@@ -37,8 +37,8 @@ mod tests {
     impl SolutionTrait for Args {
         type Output = Answer;
 
-        fn get_output(&self) -> Self::Output {
-            Solution::two_sum(self.nums.clone(), self.target)
+        fn get_output(self) -> Self::Output {
+            Solution::two_sum(self.nums, self.target)
         }
     }
 
@@ -62,7 +62,8 @@ mod tests {
     #[test]
     fn two_sum() {
         let test_cases =
-            read_test_cases::<&str, Answer, Args>("input.json").unwrap();
+            read_test_cases::<&str, Answer, Args>("input_two_sum.json")
+                .unwrap();
 
         let table_str = format_table(test_cases);
 

@@ -9,8 +9,8 @@ pub type Answer = ();
 impl SolutionTrait for Args {
     type Output = Answer;
 
-    fn get_output(&self) -> Self::Output {
-        unimplemented!()
+    fn get_output(self) -> Self::Output {
+        unimplemented!();
     }
 }
 

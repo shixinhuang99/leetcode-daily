@@ -17,7 +17,7 @@ pub struct TestCase<T, U> {
 pub trait SolutionTrait {
     type Output: Debug;
 
-    fn get_output(&self) -> Self::Output;
+    fn get_output(self) -> Self::Output;
 }
 
 pub fn read_test_cases<P, T, U>(
