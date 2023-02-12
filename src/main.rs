@@ -17,9 +17,9 @@ fn main() {
 mod tests {
     const SNAPSHOT: &'static str = r#" args                                     | answer | output | result 
 ------------------------------------------+--------+--------+--------
- Args { nums: [2, 7, 11, 15], target: 9 } | [0, 1] | [0, 1] |   [32m✔︎[39m    
- Args { nums: [3, 2, 4], target: 6 }      | [1, 2] | [1, 2] |   [32m✔︎[39m    
- Args { nums: [3, 3], target: 6 }         | [0, 1] | [0, 1] |   [32m✔︎[39m    "#;
+ Args { nums: [2, 7, 11, 15], target: 9 } | [0, 1] | [0, 1] |   [32mAC[39m   
+ Args { nums: [3, 2, 4], target: 6 }      | [1, 2] | [1, 2] |   [32mAC[39m   
+ Args { nums: [3, 3], target: 6 }         | [1, 1] | [0, 1] |   [31mWA[39m   "#;
 
     use serde::Deserialize;
     use crate::utils::{SolutionTrait, read_test_cases, format_table};

@@ -45,8 +45,8 @@ struct TableData {
 }
 
 fn format_result(result: bool) -> String {
-    const CORRECT: &'static str = "✔︎";
-    const INCORRECT: &'static str = "✘";
+    const CORRECT: &'static str = "AC";
+    const INCORRECT: &'static str = "WA";
 
     if result {
         return CORRECT.green().to_string();
