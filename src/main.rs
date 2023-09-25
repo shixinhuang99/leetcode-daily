@@ -1,72 +1,82 @@
-mod sol;
-mod utils;
-
-use utils::{read_test_cases, format_table};
-use sol::{Args, Answer};
-
 fn main() {
-    let test_cases =
-        read_test_cases::<&str, Answer, Args>("input.json").unwrap();
-
-    let table_str = format_table(test_cases);
-
-    println!("{}", table_str);
+	let sol = Solution {};
+	sol.assert();
 }
 
-#[cfg(test)]
-mod tests {
-    const SNAPSHOT: &'static str = r#" args                                     | answer | output | result 
-------------------------------------------+--------+--------+--------
- Args { nums: [2, 7, 11, 15], target: 9 } | [0, 1] | [0, 1] |   [32mAC[39m   
- Args { nums: [3, 2, 4], target: 6 }      | [1, 2] | [1, 2] |   [32mAC[39m   
- Args { nums: [3, 3], target: 6 }         | [1, 1] | [0, 1] |   [31mWA[39m   "#;
+trait SolutionRunner {
+	fn assert(&self) {
+		for (input, ans) in self.gen_test_cases() {
+			let ret = if ans == self.sol_proxy(&input) {
+				"ok"
+			} else {
+				"wrong"
+			};
 
-    use serde::Deserialize;
-    use crate::utils::{SolutionTrait, read_test_cases, format_table};
+			println!("{:?} -> {:?}: {}", input, ans, ret);
+		}
+	}
 
-    use std::collections::HashMap;
+	fn sol_proxy(&self, input: &Input) -> Answer;
 
-    #[derive(Deserialize, Debug)]
-    struct Args {
-        nums: Vec<i32>,
-        target: i32,
-    }
+	fn gen_test_cases(&self) -> Vec<(Input, Answer)>;
+}
 
-    type Answer = Vec<i32>;
+#[derive(Debug, Clone)]
+struct Input {
+	nums: Vec<i32>,
+	target: i32,
+}
 
-    impl SolutionTrait for Args {
-        type Output = Answer;
+type Answer = Vec<i32>;
 
-        fn get_output(self) -> Self::Output {
-            Solution::two_sum(self.nums, self.target)
-        }
-    }
+struct Solution;
 
-    struct Solution;
+impl Solution {
+	pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
+		use std::collections::hash_map::HashMap;
 
-    impl Solution {
-        pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-            let mut map: HashMap<i32, i32> = HashMap::with_capacity(nums.len());
+		let mut map: HashMap<i32, i32> = HashMap::with_capacity(nums.len());
 
-            for (i, num) in nums.into_iter().enumerate() {
-                if let Some(index) = map.get(&(target - num)) {
-                    return vec![*index, i as i32];
-                }
-                map.insert(num, i as i32);
-            }
+		for (i, num) in nums.into_iter().enumerate() {
+			if let Some(index) = map.get(&(target - num)) {
+				return vec![*index, i as i32];
+			}
+			map.insert(num, i as i32);
+		}
 
-            panic!()
-        }
-    }
+		panic!()
+	}
+}
 
-    #[test]
-    fn two_sum() {
-        let test_cases =
-            read_test_cases::<&str, Answer, Args>("input_two_sum.json")
-                .unwrap();
+impl SolutionRunner for Solution {
+	fn sol_proxy(&self, input: &Input) -> Answer {
+		let input = input.clone();
+		Self::two_sum(input.nums, input.target)
+	}
 
-        let table_str = format_table(test_cases);
-
-        assert_eq!(SNAPSHOT, table_str)
-    }
+	fn gen_test_cases(&self) -> Vec<(Input, Answer)> {
+		vec![
+			(
+				Input {
+					nums: vec![2, 7, 11, 15],
+					target: 9,
+				},
+				vec![0, 1],
+			),
+			(
+				Input {
+					nums: vec![3, 2, 4],
+					target: 6,
+				},
+				vec![1, 2],
+			),
+			(
+				Input {
+					nums: vec![3, 3],
+					target: 6,
+				},
+				vec![0, 1],
+			),
+		]
+	}
 }
