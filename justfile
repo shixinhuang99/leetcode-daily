@@ -1,5 +1,6 @@
 alias t := test
 alias tu := test-utils
+alias p := paste
 
 default:
 	just --list --unsorted
@@ -19,3 +20,6 @@ test-utils:
 
 sol num:
 	cargo run -p xtask -- sol {{num}}
+
+paste:
+	cargo run -p xtask -- paste
