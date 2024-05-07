@@ -1,1 +1,1 @@
-leetcode daily for [myself](https://leetcode.cn/u/apasser/)
+[leetcode](https://leetcode.cn/u/apasser/)

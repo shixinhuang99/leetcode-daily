@@ -1,5 +1,17 @@
 [package]
-name = "leetcode-daily"
+name = "leetcode"
 version = "0.1.0"
 edition = "2021"
-publish = false
+authors = ["shixinhuang99 <shixinhuang99@gmail.com>"]
+description = "leetcode solution"
+repository = "https://github.com/shixinhuang99/leetcode-daily.git"
+license = "MIT"
+
+[dev-dependencies]
+test-case = "=3.3.1"
+
+[workspace]
+members = ["xtask"]
+
+[features]
+test_utils = []
