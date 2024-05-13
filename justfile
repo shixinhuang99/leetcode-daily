@@ -1,6 +1,7 @@
 alias t := test
 alias tu := test-utils
 alias p := paste
+alias r := reset
 
 default:
 	just --list --unsorted
@@ -23,3 +24,6 @@ sol num:
 
 paste:
 	cargo run -p xtask -- paste
+
+reset:
+	cargo run -p xtask -- reset
