@@ -1,6 +1,7 @@
 alias t := test
 alias tu := test-utils
 alias p := paste
+alias r := reset
 
 default:
 	just --list --unsorted
@@ -20,6 +21,11 @@ test-utils:
 
 sol num:
 	cargo run -p xtask -- sol {{num}}
+	git add solved/{{num}}.rs
+	git commit -m "{{num}}"
 
 paste:
 	cargo run -p xtask -- paste
+
+reset:
+	cargo run -p xtask -- reset
