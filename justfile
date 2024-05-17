@@ -1,6 +1,6 @@
 alias t := test
 alias tu := test-utils
-alias p := paste
+alias p := clip
 alias r := reset
 
 default:
@@ -24,8 +24,8 @@ sol num:
 	git add solved/{{num}}.rs
 	git commit -m "{{num}}"
 
-paste:
-	cargo run -p xtask -- paste
+clip:
+	cargo run -p xtask -- clip
 
 reset:
 	cargo run -p xtask -- reset
