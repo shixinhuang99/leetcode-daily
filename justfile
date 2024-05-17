@@ -1,6 +1,6 @@
 alias t := test
 alias tu := test-utils
-alias p := clip
+alias c := clip
 alias r := reset
 
 default:
