@@ -21,7 +21,7 @@ test-utils:
 
 sol num:
 	cargo run -p xtask -- sol {{num}}
-	git add solved/{{num}}.rs
+	git add .
 	git commit -m "{{num}}"
 
 clip:
