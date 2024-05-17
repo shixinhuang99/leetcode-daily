@@ -10,6 +10,10 @@ where
     set1 == set2
 }
 
+pub fn str_slice_to_string_vec(ss: &[&str]) -> Vec<String> {
+    ss.iter().map(|s| s.to_string()).collect()
+}
+
 #[cfg(all(feature = "test_utils", test))]
 mod tests {
     use super::*;
