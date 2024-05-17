@@ -5,14 +5,14 @@ fn main() {
 
     match action {
         Action::Sol(num) => sol(num),
-        Action::Paste => paste(),
+        Action::Clip => clip(),
         Action::Reset => reset(),
     }
 }
 
 enum Action {
     Sol(i32),
-    Paste,
+    Clip,
     Reset,
 }
 
@@ -25,8 +25,8 @@ fn parse_args() -> Action {
         );
     }
 
-    if args.len() == 2 && args[1] == "paste" {
-        return Action::Paste;
+    if args.len() == 2 && args[1] == "clip" {
+        return Action::Clip;
     }
 
     if args.len() == 2 && args[1] == "reset" {
@@ -54,7 +54,7 @@ fn sol(num: i32) {
     fs::write(main_rs_path, MAIN_TPL).expect("reset main.rs failed");
 }
 
-fn paste() {
+fn clip() {
     use std::{
         io::Write,
         process::{Command, Stdio},
