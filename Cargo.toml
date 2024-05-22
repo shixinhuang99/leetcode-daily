@@ -15,10 +15,3 @@ members = ["xtask"]
 
 [features]
 test_utils = []
-
-[lints.rust]
-unused_imports = "allow"
-dead_code = "allow"
-
-[lints.clippy]
-comparison_chain = "allow"

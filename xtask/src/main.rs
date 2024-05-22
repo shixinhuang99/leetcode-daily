@@ -6,14 +6,12 @@ fn main() {
     match action {
         Action::Sol(num) => sol(num),
         Action::Paste => paste(),
-        Action::Reset => reset(),
     }
 }
 
 enum Action {
     Sol(i32),
     Paste,
-    Reset,
 }
 
 fn parse_args() -> Action {
@@ -27,10 +25,6 @@ fn parse_args() -> Action {
 
     if args.len() == 2 && args[1] == "paste" {
         return Action::Paste;
-    }
-
-    if args.len() == 2 && args[1] == "reset" {
-        return Action::Reset;
     }
 
     panic!("unknown action");
@@ -50,7 +44,9 @@ fn sol(num: i32) {
 
     fs::write(solved_dir.join(format!("{}.rs", num)), lib_code)
         .expect("write solved file failed");
+
     fs::write(lib_rs_path, LIB_TPL).expect("reset lib.rs failed");
+
     fs::write(main_rs_path, MAIN_TPL).expect("reset main.rs failed");
 }
 
@@ -79,36 +75,21 @@ fn paste() {
         }
     }
 
-    let cmd_name = if cfg!(target_os = "macos") {
-        "pbcopy"
-    } else if cfg!(target_os = "windows") {
-        "clip"
-    } else {
-        panic!("unsupported os");
-    };
+    #[cfg(target_os = "macos")]
+    {
+        let mut pbcopy = Command::new("pbcopy")
+            .stdin(Stdio::piped())
+            .spawn()
+            .expect("failed to start pbcopy");
 
-    let mut cmd = Command::new(cmd_name)
-        .stdin(Stdio::piped())
-        .spawn()
-        .unwrap_or_else(|_| panic!("failed to start {}", cmd_name));
+        let mut stdin = pbcopy.stdin.take().expect("failed to open stdin");
 
-    let mut stdin = cmd.stdin.take().expect("failed to open stdin");
+        thread::spawn(move || {
+            stdin
+                .write_all(sol_fn_code.as_bytes())
+                .expect("failed to wirte to stdin");
+        });
 
-    thread::spawn(move || {
-        stdin
-            .write_all(sol_fn_code.as_bytes())
-            .expect("failed to wirte to stdin");
-    });
-
-    cmd.wait()
-        .unwrap_or_else(|_| panic!("{} wasn't running", cmd_name));
-}
-
-fn reset() {
-    let cwd = env::current_dir().expect("invalid cwd");
-    let lib_rs_path = cwd.join("src").join("lib.rs");
-    let main_rs_path = cwd.join("src").join("main.rs");
-
-    fs::write(lib_rs_path, LIB_TPL).expect("reset lib.rs failed");
-    fs::write(main_rs_path, MAIN_TPL).expect("reset main.rs failed");
+        pbcopy.wait().expect("pbcopy wasn't running");
+    }
 }
