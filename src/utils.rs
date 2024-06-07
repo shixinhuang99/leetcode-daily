@@ -1,13 +1,11 @@
-pub fn slice_eq_no_order<T>(v1: &[T], v2: &[T]) -> bool
+pub fn slice_eq_no_order<T>(v1: &mut [T], v2: &mut [T]) -> bool
 where
-    T: Eq + std::hash::Hash,
+    T: std::cmp::Ord,
 {
-    use std::collections::HashSet;
+    v1.sort();
+    v2.sort();
 
-    let set1: HashSet<&T> = HashSet::from_iter(v1);
-    let set2: HashSet<&T> = HashSet::from_iter(v2);
-
-    set1 == set2
+    v1 == v2
 }
 
 pub fn str_slice_to_string_vec(ss: &[&str]) -> Vec<String> {
