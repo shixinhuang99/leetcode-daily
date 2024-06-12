@@ -11,7 +11,7 @@ fn main() {
 }
 
 enum Action {
-    Sol(i32),
+    Sol(String),
     Clip,
     Reset,
 }
@@ -21,7 +21,9 @@ fn parse_args() -> Action {
 
     if args.len() == 3 && args[1] == "sol" {
         return Action::Sol(
-            args[2].parse::<i32>().expect("invalid problem number"),
+            args[2]
+                .trim()
+                .replace(|ch: char| !ch.is_ascii_alphanumeric(), "_"),
         );
     }
 
@@ -40,15 +42,38 @@ const LIB_TPL: &str = include_str!("lib.rs.txt");
 
 const MAIN_TPL: &str = include_str!("main.rs.txt");
 
-fn sol(num: i32) {
+fn sol(file_name: String) {
     let cwd = env::current_dir().expect("invalid cwd");
     let lib_rs_path = cwd.join("src").join("lib.rs");
     let main_rs_path = cwd.join("src").join("main.rs");
     let solved_dir = cwd.join("solved");
-    let lib_code =
+    let full_lib_code =
         fs::read_to_string(&lib_rs_path).expect("read lib.rs failed");
 
-    fs::write(solved_dir.join(format!("{}.rs", num)), lib_code)
+    let mut lib_code = String::new();
+    let mut flag = true;
+
+    for line in full_lib_code.lines() {
+        if flag {
+            let line_trimed = line.trim_start();
+            if !(line_trimed.starts_with("println!")
+                || line_trimed.starts_with("print!"))
+            {
+                lib_code.push_str(line);
+                lib_code.push('\n');
+            }
+        }
+        if line == "pub struct Solution;" {
+            lib_code.push('\n');
+            flag = false;
+        } else if line == "// start" {
+            lib_code.push_str(line);
+            lib_code.push('\n');
+            flag = true;
+        }
+    }
+
+    fs::write(solved_dir.join(format!("{}.rs", file_name)), lib_code)
         .expect("write solved file failed");
     fs::write(lib_rs_path, LIB_TPL).expect("reset lib.rs failed");
     fs::write(main_rs_path, MAIN_TPL).expect("reset main.rs failed");
