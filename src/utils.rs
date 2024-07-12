@@ -18,6 +18,6 @@ mod tests {
 
     #[test]
     fn test_slice_eq_no_order() {
-        assert!(slice_eq_no_order(&[1, 0], &[0, 1]));
+        assert!(slice_eq_no_order(&mut [1, 0], &mut [0, 1]));
     }
 }

@@ -7,6 +7,10 @@ description = "leetcode solution"
 repository = "https://github.com/shixinhuang99/leetcode-daily.git"
 license = "MIT"
 
+[lib]
+doc = false
+doctest = false
+
 [dev-dependencies]
 test-case = "=3.3.1"
 
