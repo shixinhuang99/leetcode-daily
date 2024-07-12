@@ -13,7 +13,5 @@ mod tests {
     use test_case::test_case;
     use utils::*;
 
-    fn test_solution() {
-        //
-    }
+    fn test_solution() {}
 }
