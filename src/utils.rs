@@ -8,10 +8,6 @@ where
 	v1 == v2
 }
 
-pub fn str_slice_to_string_vec(ss: &[&str]) -> Vec<String> {
-	ss.iter().map(|s| s.to_string()).collect()
-}
-
 #[cfg(all(feature = "test_utils", test))]
 mod tests {
 	use super::*;
@@ -20,4 +16,18 @@ mod tests {
 	fn test_slice_eq_no_order() {
 		assert!(slice_eq_no_order(&mut [1, 0], &mut [0, 1]));
 	}
+}
+
+pub trait VecExt {
+    type Output;
+
+    fn to_elements_owned(&self) -> Vec<Self::Output>;
+}
+
+impl VecExt for Vec<&str> {
+    type Output = String;
+
+    fn to_elements_owned(&self) -> Vec<String> {
+        self.iter().map(|s| s.to_string()).collect()
+    }
 }
