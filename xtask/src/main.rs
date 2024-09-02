@@ -5,156 +5,156 @@ static LIB_TPL_CODE: &str = include_str!("lib.rs.txt");
 static MAIN_TPL_CODE: &str = include_str!("main.rs.txt");
 
 fn main() {
-    if let Err(err) = run_xtask() {
-        eprintln!("{}", err);
-    }
+	if let Err(err) = run_xtask() {
+		eprintln!("{}", err);
+	}
 }
 
 fn run_xtask() -> Result<()> {
-    Xtask::try_new()?.run()
+	Xtask::try_new()?.run()
 }
 
 enum Action {
-    Sol(String),
-    Clip,
-    Reset,
+	Sol(String),
+	Clip,
+	Reset,
 }
 
 struct Xtask {
-    lib_rs_path: PathBuf,
-    main_rs_path: PathBuf,
-    solved_dir: PathBuf,
+	lib_rs_path: PathBuf,
+	main_rs_path: PathBuf,
+	solved_dir: PathBuf,
 }
 
 impl Xtask {
-    fn try_new() -> Result<Self> {
-        let cwd = env::current_dir()?;
-        let lib_rs_path = cwd.join("src").join("lib.rs");
-        let main_rs_path = cwd.join("src").join("main.rs");
-        let solved_dir = cwd.join("solved");
+	fn try_new() -> Result<Self> {
+		let cwd = env::current_dir()?;
+		let lib_rs_path = cwd.join("src").join("lib.rs");
+		let main_rs_path = cwd.join("src").join("main.rs");
+		let solved_dir = cwd.join("solved");
 
-        Ok(Self {
-            lib_rs_path,
-            main_rs_path,
-            solved_dir,
-        })
-    }
+		Ok(Self {
+			lib_rs_path,
+			main_rs_path,
+			solved_dir,
+		})
+	}
 
-    fn run(&self) -> Result<()> {
-        let action = parse_action();
+	fn run(&self) -> Result<()> {
+		let action = parse_action();
 
-        match action {
-            Action::Sol(name) => self.sol(name)?,
-            Action::Clip => self.clip()?,
-            Action::Reset => self.reset()?,
-        }
+		match action {
+			Action::Sol(name) => self.sol(name)?,
+			Action::Clip => self.clip()?,
+			Action::Reset => self.reset()?,
+		}
 
-        Ok(())
-    }
+		Ok(())
+	}
 
-    fn sol(&self, file_name: String) -> Result<()> {
-        let full_lib_code = fs::read_to_string(&self.lib_rs_path)?;
+	fn sol(&self, file_name: String) -> Result<()> {
+		let full_lib_code = fs::read_to_string(&self.lib_rs_path)?;
 
-        let mut lib_code = String::new();
-        let ignore = ["//", "println!", "print!"];
-        let required = ["// start", "// end"];
-        let mut last_line_empty = false;
+		let mut lib_code = String::new();
+		let ignore = ["//", "println!", "print!"];
+		let required = ["// start", "// end"];
+		let mut last_line_empty = false;
 
-        for line in full_lib_code.lines() {
-            let trimed = line.trim_start();
-            if !required.contains(&trimed)
-                && ignore.iter().any(|v| trimed.starts_with(v))
-            {
-                continue;
-            }
-            if !(last_line_empty && line.is_empty()) {
-                lib_code.push_str(line);
-                lib_code.push('\n');
-            }
-            last_line_empty = line.is_empty();
-        }
+		for line in full_lib_code.lines() {
+			let trimed = line.trim_start();
+			if !required.contains(&trimed)
+				&& ignore.iter().any(|v| trimed.starts_with(v))
+			{
+				continue;
+			}
+			if !(last_line_empty && line.is_empty()) {
+				lib_code.push_str(line);
+				lib_code.push('\n');
+			}
+			last_line_empty = line.is_empty();
+		}
 
-        fs::write(self.solved_dir.join(format!("{}.rs", file_name)), lib_code)?;
-        fs::write(&self.lib_rs_path, LIB_TPL_CODE)?;
-        fs::write(&self.main_rs_path, MAIN_TPL_CODE)?;
+		fs::write(self.solved_dir.join(format!("{}.rs", file_name)), lib_code)?;
+		fs::write(&self.lib_rs_path, LIB_TPL_CODE)?;
+		fs::write(&self.main_rs_path, MAIN_TPL_CODE)?;
 
-        Ok(())
-    }
+		Ok(())
+	}
 
-    fn clip(&self) -> Result<()> {
-        use std::{
-            io::Write,
-            process::{Command, Stdio},
-            thread,
-        };
+	fn clip(&self) -> Result<()> {
+		use std::{
+			io::Write,
+			process::{Command, Stdio},
+			thread,
+		};
 
-        let lib_code = fs::read_to_string(&self.lib_rs_path)?;
+		let lib_code = fs::read_to_string(&self.lib_rs_path)?;
 
-        let mut sol_fn_code = String::new();
-        let mut flag = false;
+		let mut sol_fn_code = String::new();
+		let mut flag = false;
 
-        for line in lib_code.lines() {
-            if line == "// start" {
-                flag = true;
-            } else if line == "// end" {
-                break;
-            } else if flag {
-                sol_fn_code.push_str(line);
-                sol_fn_code.push('\n');
-            }
-        }
+		for line in lib_code.lines() {
+			if line == "// start" {
+				flag = true;
+			} else if line == "// end" {
+				break;
+			} else if flag {
+				sol_fn_code.push_str(line);
+				sol_fn_code.push('\n');
+			}
+		}
 
-        let cmd_name = if cfg!(target_os = "macos") {
-            "pbcopy"
-        } else if cfg!(target_os = "windows") {
-            "clip"
-        } else {
-            panic!("unsupported os");
-        };
+		let cmd_name = if cfg!(target_os = "macos") {
+			"pbcopy"
+		} else if cfg!(target_os = "windows") {
+			"clip"
+		} else {
+			panic!("unsupported os");
+		};
 
-        let mut cmd = Command::new(cmd_name).stdin(Stdio::piped()).spawn()?;
+		let mut cmd = Command::new(cmd_name).stdin(Stdio::piped()).spawn()?;
 
-        let mut stdin = cmd
-            .stdin
-            .take()
-            .ok_or(anyhow::anyhow!("failed to open stdin"))?;
+		let mut stdin = cmd
+			.stdin
+			.take()
+			.ok_or(anyhow::anyhow!("failed to open stdin"))?;
 
-        thread::spawn(move || -> Result<()> {
-            stdin.write_all(sol_fn_code.as_bytes())?;
-            Ok(())
-        });
+		thread::spawn(move || -> Result<()> {
+			stdin.write_all(sol_fn_code.as_bytes())?;
+			Ok(())
+		});
 
-        cmd.wait()?;
+		cmd.wait()?;
 
-        Ok(())
-    }
+		Ok(())
+	}
 
-    fn reset(&self) -> Result<()> {
-        fs::write(&self.lib_rs_path, LIB_TPL_CODE)?;
-        fs::write(&self.main_rs_path, MAIN_TPL_CODE)?;
+	fn reset(&self) -> Result<()> {
+		fs::write(&self.lib_rs_path, LIB_TPL_CODE)?;
+		fs::write(&self.main_rs_path, MAIN_TPL_CODE)?;
 
-        Ok(())
-    }
+		Ok(())
+	}
 }
 
 fn parse_action() -> Action {
-    let args: Vec<String> = env::args().collect();
+	let args: Vec<String> = env::args().collect();
 
-    if args.len() == 3 && args[1] == "sol" {
-        return Action::Sol(
-            args[2]
-                .trim()
-                .replace(|ch: char| !ch.is_ascii_alphanumeric(), "_"),
-        );
-    }
+	if args.len() == 3 && args[1] == "sol" {
+		return Action::Sol(
+			args[2]
+				.trim()
+				.replace(|ch: char| !ch.is_ascii_alphanumeric(), "_"),
+		);
+	}
 
-    if args.len() == 2 && args[1] == "clip" {
-        return Action::Clip;
-    }
+	if args.len() == 2 && args[1] == "clip" {
+		return Action::Clip;
+	}
 
-    if args.len() == 2 && args[1] == "reset" {
-        return Action::Reset;
-    }
+	if args.len() == 2 && args[1] == "reset" {
+		return Action::Reset;
+	}
 
-    panic!("unknown action");
+	panic!("unknown action");
 }
