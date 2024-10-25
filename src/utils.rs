@@ -19,15 +19,22 @@ mod tests {
 }
 
 pub trait VecExt {
-    type Output;
+	type Output;
 
-    fn to_elements_owned(&self) -> Vec<Self::Output>;
+	fn to_elements_owned(&self) -> Vec<Self::Output>;
 }
 
 impl VecExt for Vec<&str> {
-    type Output = String;
+	type Output = String;
 
-    fn to_elements_owned(&self) -> Vec<String> {
-        self.iter().map(|s| s.to_string()).collect()
-    }
+	fn to_elements_owned(&self) -> Vec<String> {
+		self.iter().map(|s| s.to_string()).collect()
+	}
+}
+
+#[macro_export]
+macro_rules! vec_2d {
+	($($x:tt),+) => {
+		vec![$(vec!$x),+]
+	};
 }
