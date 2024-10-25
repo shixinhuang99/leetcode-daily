@@ -9,9 +9,9 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use test_case::test_case;
-    use utils::*;
+	use super::*;
+	use test_case::test_case;
+	use utils::*;
 
-    fn test_solution() {}
+	fn test_solution() {}
 }
