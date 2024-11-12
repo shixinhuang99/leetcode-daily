@@ -38,3 +38,10 @@ macro_rules! vec_2d {
 		vec![$(vec!$x),+]
 	};
 }
+
+#[macro_export]
+macro_rules! S {
+	($s:literal) => {
+		$s.to_string()
+	};
+}
