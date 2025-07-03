@@ -5,9 +5,9 @@ static LIB_TPL_CODE: &str = include_str!("lib.rs.txt");
 static MAIN_TPL_CODE: &str = include_str!("main.rs.txt");
 
 fn main() {
-	if let Err(err) = run_xtask() {
-		eprintln!("{}", err);
-	}
+    if let Err(err) = run_xtask() {
+        eprintln!("{err}");
+    }
 }
 
 fn run_xtask() -> Result<()> {
@@ -74,9 +74,9 @@ impl Xtask {
 			last_line_empty = line.is_empty();
 		}
 
-		fs::write(self.solved_dir.join(format!("{}.rs", file_name)), lib_code)?;
-		fs::write(&self.lib_rs_path, LIB_TPL_CODE)?;
-		fs::write(&self.main_rs_path, MAIN_TPL_CODE)?;
+        fs::write(self.solved_dir.join(format!("{file_name}.rs")), lib_code)?;
+        fs::write(&self.lib_rs_path, LIB_TPL_CODE)?;
+        fs::write(&self.main_rs_path, MAIN_TPL_CODE)?;
 
 		Ok(())
 	}

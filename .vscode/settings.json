@@ -1,4 +1,17 @@
 {
   "rust-analyzer.lens.run.enable": false,
-  "rust-analyzer.lens.debug.enable": false
+  "rust-analyzer.lens.debug.enable": false,
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -9,6 +9,7 @@ default:
 fmt:
 	cargo fmt --all
 	taplo fmt
+	node --run fmt
 
 lint: fmt
 	cargo clippy --all-targets --all-features

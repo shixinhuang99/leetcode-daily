@@ -1,0 +1,25 @@
+{
+  "name": "leetcode",
+  "private": true,
+  "version": "0.1.0",
+  "author": "shixinhuang99 <shixinhuang99@gmail.com>",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shixinhuang99/leetcode-daily.git"
+  },
+  "homepage": "https://github.com/shixinhuang99/leetcode-daily.git",
+  "description": "leetcode solution",
+  "scripts": {
+    "fmt": "biome check --linter-enabled=false --write",
+    "check": "biome check",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit",
+    "run": "tsx ./typescript/main.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^22.14.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
