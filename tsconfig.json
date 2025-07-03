@@ -10,6 +10,6 @@
     "lib": ["ESNext"],
     "module": "Node16",
     "moduleResolution": "node16",
-    "types": ["node"]
+    "types": ["node", "vitest/importMeta"]
   }
 }

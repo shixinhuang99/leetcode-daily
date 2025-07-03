@@ -20,13 +20,13 @@ test:
 test-utils:
 	cargo test --lib -F test_utils
 
-sol num:
-	cargo xtask sol {{num}}
+sol lang num:
+	cargo xtask sol {{lang}} {{num}}
 	git add .
 	git commit -m "{{num}}"
 
-clip:
-	cargo xtask clip
+clip lang:
+	cargo xtask clip {{lang}}
 
 reset:
 	cargo xtask reset

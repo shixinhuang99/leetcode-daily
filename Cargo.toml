@@ -4,8 +4,7 @@ version = "0.1.0"
 edition = "2024"
 authors = ["shixinhuang99 <shixinhuang99@gmail.com>"]
 description = "leetcode solution"
-repository = "https://github.com/shixinhuang99/leetcode-daily"
-license = "MIT"
+repository = "https://github.com/shixinhuang99/leetcode-daily.git"
 
 [lib]
 doc = false

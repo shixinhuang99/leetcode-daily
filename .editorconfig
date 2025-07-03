@@ -6,6 +6,12 @@ end_of_line = lf
 
 [*.{rs,toml}]
 indent_style = tab
+indent_size = 4
 
 [justfile]
 indent_style = tab
+indent_size = 4
+
+[*.{js,ts,tsx,d.ts}]
+indent_style = space
+indent_size = 2

@@ -14,12 +14,14 @@
     "fmt": "biome check --linter-enabled=false --write",
     "check": "biome check",
     "typecheck": "tsc -p ./tsconfig.json --noEmit",
-    "run": "tsx ./typescript/main.ts"
+    "run": "tsx ./typescript/sol.ts",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/node": "^22.14.1",
     "tsx": "^4.19.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   }
 }
