@@ -22,11 +22,13 @@ test-utils:
 
 sol lang num:
 	cargo xtask sol {{lang}} {{num}}
-	git add .
-	git commit -m "{{num}}"
 
 clip lang:
 	cargo xtask clip {{lang}}
 
 reset:
 	cargo xtask reset
+
+cm num:
+	git add .
+	git commit -m "{{num}}"
